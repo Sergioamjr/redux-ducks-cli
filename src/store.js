@@ -3,7 +3,7 @@ console.log('store.js');
 /* eslint-enable */
 
 const { createFolder, createFile, base, appendContent } = require('./communs');
-const { createAction, actionsType, actionsSwitch, actionsImport, actionsIndex } = require('./factory');
+const { createAction, actionsType, actionsSwitch, actionsImport, actionsIndex, provider } = require('./factory');
 
 const storeDefault = {
     hello: 'Hello World!'
@@ -12,6 +12,7 @@ const storeDefault = {
 const actionsName = 'button';
 const fileBaseIndex = `${base}/store/index.js`;
 const fileBase = `${base}/store/${actionsName}/${actionsName}.js`;
+const providerFile = `${base}/index.js`;
 
 const logError = error => {
     /* eslint-disable */
@@ -26,6 +27,7 @@ createFolder(`${base}`)
         .then(() => createFile(`${base}/store/storeDefault.json`, JSON.stringify(storeDefault)))
         .then(() => createFile(fileBaseIndex, ''))
         .then(() => createFile(fileBase, ''))
+        .then(() => createFile(providerFile, provider()))
 
         // Add content
         .then(() => appendContent(fileBase, actionsImport(actionsName)))
