@@ -13,6 +13,12 @@ const actionsName = 'button';
 const fileBaseIndex = `${base}/store/index.js`;
 const fileBase = `${base}/store/${actionsName}/${actionsName}.js`;
 
+const logError = error => {
+    /* eslint-disable */
+    console.log('Not possible create redux config. Reason: ', error);
+    /* eslint-enable */
+};
+
 // Create Reducer
 createFolder(`${base}`)
     .then(() => createFolder(`${base}/store`))
@@ -27,4 +33,6 @@ createFolder(`${base}`)
         .then(() => appendContent(fileBase, actionsSwitch(actionsName)))
         .then(() => appendContent(fileBase, createAction(actionsName)))
         .then(() => appendContent(fileBaseIndex, actionsIndex(actionsName)))
-    );
+        .catch(logError)
+    )
+    .catch(logError);

@@ -13,10 +13,12 @@ const actionsSwitchEnd = () => `default:
     }
 }`;
 
+const arr = ['button'];
+
 const actionsSwitch = name => {
     return `
     ${actionsSwitchInit(name)}
-    ${actionsSwitchMiddle(name)}
+    ${arr.map(item => actionsSwitchMiddle(item))}
     ${actionsSwitchEnd()}
     `;
 };

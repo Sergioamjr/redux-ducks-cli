@@ -1,19 +1,18 @@
-const fs = require('fs');
+const { existsSync, mkdir, writeFile, appendFile } = require('fs');
 
 const base = 'redux';
-
-const createFolder = path => new Promise((resolve, reject) =>
-    !fs.existsSync(path) ? fs.mkdir(path, err => err ? reject() : resolve()) : resolve()
-);
 
 const returnPromise = (method, path, content) =>
     new Promise((resolve, reject) =>
         method(path, content, err => err ? reject() : resolve()));
 
-const createFile = (path, content) => returnPromise(fs.writeFile, path, content);
+const createFolder = path => new Promise((resolve, reject) =>
+    !existsSync(path) ? mkdir(path, err => err ? reject() : resolve()) : resolve()
+);
 
-const appendContent = (file, content) => returnPromise(fs.appendFile, file, content);
+const createFile = (path, content) => returnPromise(writeFile, path, content);
 
+const appendContent = (file, content) => returnPromise(appendFile, file, content);
 
 module.exports = {
     createFolder,
