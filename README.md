@@ -9,26 +9,47 @@ Redux é maravilhoso, fácil e prático. Mas muito chato de configurar; criar a 
 O Redux-Ducks-CLI cria a estrutura pronta pra você usar o redux, apenas tendo o trabalho de importar a store e adicionar no provider da sua aplicação. Ele cria um diretório chamado Redux com os arquivos necessários, caso você queira alterar a ação de uma action, faça a alteração e adicione essa store na white list, para ela não ser alterada depois.
 
 ## Requisitos
-Por enquanto o Redux-Ducks-CLI deve ser usado com o React, levando em conta que você tenha as dependências
-```redux` e `react-redux```.
+Por enquanto o Redux-Ducks-CLI deve ser usado com o React, levando em conta que você tenha as dependências.
+
+```bash
+redux` e `react-redux
+```
 
 ## Get Starter
 Instale globalmente com
-```npm install -g redux-ducks-cli```
+
+```bash
+npm install -g redux-ducks-cli
+```
 
 Para iniciar a configuração inicial do Redux, execute no terminal
-```redux-ducks init```.
+
+```bash
+redux-ducks init
+```
 
 Para criar uma Store, execute
-```redux-ducks <store> <default_value>```.
+
+```bash
+redux-ducks <store> <default_value>
+```
 
 Para criar um Action Creator:
-```redux-ducks add <store> <action_creator_name> <change>```.
-change = concat/spread, decrement, increment
+
+```bash
+redux-ducks add <store> <action_creator_name> <concat/spread/decrement/increment>
+```
+
 Estamos declarando para adicionar na Store a Action Creator. Caso essa Store não exista, ela será criada.
 
 Para remover um Action Creator:
-```redux-ducks remove <store> <action_creator_name>```.
+
+```bash
+redux-ducks remove <store> <action_creator_name>
+```
 
 Para renomear uma Action Creator:
-```redux-ducks rename <store> <action_creator_old_name> <action_creator_new_name>```.
+
+```bash
+redux-ducks rename <store> <action_creator_old_name> <action_creator_new_name>
+```
