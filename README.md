@@ -12,7 +12,7 @@ O Redux-Ducks-CLI cria a estrutura pronta pra você usar o redux, apenas tendo o
 Por enquanto o Redux-Ducks-CLI deve ser usado com o React, levando em conta que você tenha as dependências.
 
 ```bash
-redux` e `react-redux
+redux e react-redux
 ```
 
 ## Get Starter
