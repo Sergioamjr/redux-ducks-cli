@@ -16,19 +16,19 @@ redux e react-redux
 ```
 
 ## Get Starter
-Instale globalmente com
+Instale globalmente:
 
 ```bash
 npm install -g redux-ducks-cli
 ```
 
-Para iniciar a configuração inicial do Redux, execute no terminal
+Para iniciar a configuração inicial do Redux:
 
 ```bash
 redux-ducks init
 ```
 
-Para criar uma Store, execute
+Para criar uma Store:
 
 ```bash
 redux-ducks <store> <default_value>
