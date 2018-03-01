@@ -10,4 +10,4 @@ module.exports = {
     actionsSwitch,
     actionsImport,
     actionsIndex,
-}
+};

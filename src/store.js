@@ -1,14 +1,17 @@
+/* eslint-disable */
 console.log('store.js');
+/* eslint-enable */
+
 const { createFolder, createFile, base, appendContent } = require('./communs');
-const { createAction, actionsType, actionsSwitch, actionsImport, actionsIndex } = require('./factory')
+const { createAction, actionsType, actionsSwitch, actionsImport, actionsIndex } = require('./factory');
 
 const storeDefault = {
     hello: 'Hello World!'
-}
+};
 
 const actionsName = 'button';
-const fileBaseIndex = `${base}/store/index.js`
-const fileBase = `${base}/store/${actionsName}/${actionsName}.js`
+const fileBaseIndex = `${base}/store/index.js`;
+const fileBase = `${base}/store/${actionsName}/${actionsName}.js`;
 
 
 // Create Reducer

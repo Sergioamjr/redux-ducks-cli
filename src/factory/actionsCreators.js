@@ -5,6 +5,6 @@ export function action${name}(payload) {
       payload
     }
   }
-`
+`;
 
-module.exports = createAction
+module.exports = createAction;
