@@ -3,7 +3,7 @@
 [EM CONSTRUÇÃO]
 
 ## Motivo
-    Redux é maravilhoso. Mas é muito chato configurar; criar a store, reducer, actions, etc, é necessário uma volta enorme até ver o valor na tela. Pensando nisso, foi criado o Redux Ducks CLI. Como está no nome, é usado o pattern Ducks, caso você não conheça, veja um pouco sobre ele, https://github.com/erikras/ducks-modular-redux, mas resumindo, você define os types, reducers e actions em um único arquivo por State, evitando criar 3 arquivos para atingir o mesmo fim.
+Redux é maravilhoso. Mas é muito chato configurar; criar a store, reducer, actions, etc, é necessário uma volta enorme até ver o valor na tela. Pensando nisso, foi criado o Redux Ducks CLI. Como está no nome, é usado o pattern Ducks, caso você não conheça, veja um pouco sobre ele, https://github.com/erikras/ducks-modular-redux, mas resumindo, você define os types, reducers e actions em um único arquivo por State, evitando criar 3 arquivos para atingir o mesmo fim.
 
 ## Como funciona
 O Redux-Ducks-CLI cria a estrutura pronta pra você usar o redux, apenas tendo o trabalho de importar a store e adicionar no provider da sua aplicação. Ele cria um diretório chamado Redux com os arquivos necessários, caso você queira alterar a ação de uma action, faça a alteração e adicione essa store na white list, para ela não ser alterada depois.
