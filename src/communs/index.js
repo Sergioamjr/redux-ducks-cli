@@ -14,9 +14,16 @@ const createFile = (path, content) => returnPromise(writeFile, path, content);
 
 const appendContent = (file, content) => returnPromise(appendFile, file, content);
 
+const logError = error => {
+    /* eslint-disable */
+    console.log('Not possible create redux config. Reason: ', error);
+    /* eslint-enable */
+};
+
 module.exports = {
     createFolder,
     createFile,
     appendContent,
     base,
+    logError,
 };
