@@ -1,5 +1,5 @@
 const { createReducer } = require('./reducers');
-const { createStore, addStore } = require('./store');
+const { createStore } = require('./store');
 const { createFolder, base, logError } = require('./communs');
 
 
@@ -7,5 +7,4 @@ const { createFolder, base, logError } = require('./communs');
 createFolder(base)
     .then(() => createReducer())
     .then(() => createStore())
-    .then(() => addStore())
     .catch(logError);
