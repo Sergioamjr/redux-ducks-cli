@@ -4,10 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-      "start": "node src/index.js",
-      "delete": "rm -rf redux"
+    "start": "node src/index.js",
+    "delete": "rm -rf redux"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "yargs": "^11.0.0"
+  }
 }
