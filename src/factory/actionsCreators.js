@@ -1,7 +1,7 @@
 const createAction = name => `
 export function action${name}(payload) {
     return {
-      type: UPDATE_${name.toUpperCase()},
+      type: ${name.toUpperCase()},
       payload
     }
   }

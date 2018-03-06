@@ -5,26 +5,27 @@ const storeDefault = {
     hello: 'Hello World!'
 };
 
-const actionsName = 'button';
+const state = 'button';
+const stateStore = 'UpdateButton';
 const fileBaseIndex = `${base}/store/index.js`;
-const fileBase = `${base}/store/${actionsName}/${actionsName}.js`;
+const fileBase = `${base}/store/${state}/${state}.js`;
 const providerFile = `${base}/index.js`;
 
 // Create Reducer
 const createStore = () =>
     createFolder(`${base}/store`)
-        .then(() => createFolder(`${base}/store/${actionsName}`))
+        .then(() => createFolder(`${base}/store/${state}`))
         .then(() => createFile(`${base}/store/storeDefault.json`, JSON.stringify(storeDefault)))
         .then(() => createFile(fileBaseIndex, '')
             .then(() => {
-                appendContent(fileBaseIndex, actionsIndex(actionsName));
+                appendContent(fileBaseIndex, actionsIndex(state));
             }))
         .then(() => createFile(fileBase, '')
             .then(() => {
-                appendContent(fileBase, actionsImport(actionsName));
-                appendContent(fileBase, actionsType(actionsName));
-                appendContent(fileBase, actionsSwitch(actionsName));
-                appendContent(fileBase, createAction(actionsName));
+                appendContent(fileBase, actionsImport(stateStore));
+                appendContent(fileBase, actionsType(stateStore));
+                appendContent(fileBase, actionsSwitch(stateStore));
+                appendContent(fileBase, createAction(stateStore));
             }))
         .then(() => createFile(providerFile, provider()))
         .catch(logError);

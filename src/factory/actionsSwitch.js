@@ -3,7 +3,7 @@ export default function reducer(state = ${name}, action) {
     const { type, payload } = action
     switch (type) {`;
 
-const actionsSwitchMiddle = name => `case UPDATE_${name.toUpperCase()}:
+const actionsSwitchMiddle = name => `case ${name.toUpperCase()}:
         return { ...state, ...payload };
         break;`;
 

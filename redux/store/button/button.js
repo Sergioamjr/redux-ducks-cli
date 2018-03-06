@@ -1,12 +1,12 @@
 import Store from './storeDefault.json'
-const { button } = Store
+const { UpdateButton } = Store
 
-const UPDATE_BUTTON = 'UPDATE_BUTTON'
+const UPDATEBUTTON = 'UPDATEBUTTON'
     
-export default function reducer(state = button, action) {
+export default function reducer(state = UpdateButton, action) {
     const { type, payload } = action
     switch (type) {
-    case UPDATE_BUTTON:
+    case BUTTON:
         return { ...state, ...payload };
         break;
     default:
@@ -15,9 +15,9 @@ export default function reducer(state = button, action) {
     }
 }
     
-export function actionbutton(payload) {
+export function actionUpdateButton(payload) {
     return {
-      type: UPDATE_BUTTON,
+      type: UPDATEBUTTON,
       payload
     }
   }
