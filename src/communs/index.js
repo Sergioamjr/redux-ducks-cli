@@ -18,7 +18,7 @@ const returnPromise = (method, path, content) =>
     new Promise((resolve, reject) =>
         method(path, content, err => err ? reject() : resolve()));
 
-const returnSinglePromise = (method, path) =>
+const readFilePromise = (method, path) =>
     new Promise((resolve, reject) =>
         method(path, 'utf8', (err, data) => err ? reject(err) : resolve(data)));
 
@@ -32,7 +32,7 @@ const appendContent = (file, content) => returnPromise(appendFile, file, content
 
 const createConfig = (path, content = '') => returnPromise(writeFile, path, content);
 
-const getConfigFile = (path = `${base}/reduxConfig.js`) => returnSinglePromise(readFile, path);
+const getConfigFile = (path = `${base}/reduxConfig.json`) => readFilePromise(readFile, path);
 
 module.exports = {
     createFolder,
