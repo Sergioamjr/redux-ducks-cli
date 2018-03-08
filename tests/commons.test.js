@@ -1,5 +1,12 @@
 /* eslint-disable */
-const expect = require('chai').expect;
+const chai = require('chai');
+const sinon = require("sinon");
+const sinonChai = require("sinon-chai");
+const sinonStubPromise = require('sinon-stub-promise');
+const { expect } = chai;
+sinonStubPromise(sinon);
+chai.use(sinonChai);
+
 const {
   createFolder,
   createFile,
@@ -8,12 +15,30 @@ const {
   logError,
   logSuccess,
   createConfig,
-  getConfigFile } = require('./../src/communs/index.js');
+  getConfigFile,
+  returnPromise
+} = require('./../src/communs/index.js');
 
 describe("Commons.js", () => {
+  describe("Call function", () => {
+    it("Should call functions", () => {
+      const spy = sinon.stub();
+      returnPromise(spy, 'path', 'content')
+      expect(spy).to.been.have.called;
+    });
+  });
+
+  describe("Error log", () => {
+    // it("Should call console.log", () => {
+    //   const spy = sinon.stub(console, 'log');
+    //   logError();
+    //   expect(spy).to.have.been.calledOnce;
+    // })
+  })
+
   describe("Smoke tests", () => {
-    it("Should return true", () => {
-      expect(true).to.be.true;
+    it("Base should be redux", () => {
+      expect(base).to.equal("redux")
     });
 
     it("Function createFolder should exists", () => {
