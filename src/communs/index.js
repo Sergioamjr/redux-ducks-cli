@@ -43,4 +43,5 @@ module.exports = {
     logSuccess,
     createConfig,
     getConfigFile,
+    returnPromise,
 };
