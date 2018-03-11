@@ -1,7 +1,7 @@
 const argv = require('yargs').argv;
 const { createReducer } = require('./reducers');
 const { createStore, createStateStore } = require('./store');
-const { createFolder, base, logError, logSuccess, createConfig, getConfigFile } = require('./communs');
+const { createFolder, base, logError, logSuccess, createFile, getConfigFile } = require('./communs');
 const { init, state, action, value } = argv;
 
 /* eslint-disable */
@@ -9,10 +9,11 @@ const { init, state, action, value } = argv;
 /* eslint-enable */
 
 
+
 // INIT
 if (init) {
     createFolder(base)
-        .then(() => createConfig(`${base}/reduxConfig.json`, '{}'))
+        .then(() => createFile(`${base}/reduxConfig.json`, '{}'))
         .then(() => createReducer())
         .then(() => createStore())
         .then(logSuccess)

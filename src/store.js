@@ -6,17 +6,27 @@ const { createAction, actionsType, actionsSwitch, actionsImport, actionsIndex, p
 // Create Reducer
 const createStore = () =>
     createFolder(`${base}/store`)
-        .then(() => createFile(`${base}/store/storeDefault.json`, ''))
+        .then(() => createFile(`${base}/store/storeDefault.json`, '{}'))
         .then(() => createFile(`${base}/store/index.js`, ''))
         .then(() => createFile(`${base}/index.js`, provider()))
         .catch(logError);
 
+const restObject = (Obj, add, value = {}) => JSON.stringify(Object.assign({}, Obj, { [add]: value }));
+
+
 
 // Create a new state store
-const createStateStore = (state, stateInStore, value, config) =>
+const createStateStore = (state, stateInStore, value = {}, config) =>
     createFolder(`${base}/store/${state}`)
-        .then(() => appendContent(`${base}/store/storeDefault.json`, JSON.stringify({ [state]: value || {} })))
-        .then(() =>  createFile(`${base}/reduxConfig.json`, JSON.stringify(Object.assign({}, config, { [state]: {} }))))
+        .then(() => getConfigFile(`${base}/store/storeDefault.json`)
+            .then(storeDefault => createFile(`${base}/store/storeDefault.json`, restObject(JSON.parse(storeDefault), state))))
+        .then(() =>  createFile(`${base}/reduxConfig.json`,
+            restObject(config, state,
+                config[state] ?
+                    stateInStore && !config[state].includes(stateInStore) ?
+                        config[state].concat([stateInStore]) :
+                        config[state] :
+                    stateInStore ? [stateInStore] : [])))
         .then(() => createFile(`${base}/store/${state}/${state}.js`, '')
             .then(() => {
                 if (stateInStore) {
