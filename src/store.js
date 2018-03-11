@@ -14,14 +14,14 @@ const createStore = () =>
         .then(() => createFile(`${base}/index.js`, provider()))
         .catch(logError);
 
-const restObject = (Obj, add, value = {}) => JSON.stringify(Object.assign({}, Obj, { [add]: value }));
+const restObject = (Obj, add, value) => JSON.stringify(Object.assign({}, Obj, { [add]: value }));
 
 
 // Create a new state store
 const createStateStore = (state, stateInStore, value = {}, config) =>
     createFolder(`${base}/store/${state}`)
         .then(() => getConfigFile(`${base}/store/storeDefault.json`)
-            .then(storeDefault => createFile(`${base}/store/storeDefault.json`, restObject(JSON.parse(storeDefault), state))))
+            .then(storeDefault => createFile(`${base}/store/storeDefault.json`, restObject(JSON.parse(storeDefault), state, value))))
         .then(() =>  createFile(`${base}/reduxConfig.json`,
             restObject(config, state,
                 config[state] ?
@@ -50,24 +50,3 @@ module.exports = {
     createStore,
     createStateStore
 };
-
-
-// .then(() => {
-//   appendContent(fileBase, actionsImport(stateStore));
-//   appendContent(fileBase, actionsType(stateStore));
-//   appendContent(fileBase, actionsSwitch(stateStore));
-//   appendContent(fileBase, createAction(stateStore));
-// })
-
-
-
-
-// .then(() => {
-//   appendContent(fileBaseIndex, actionsIndex(state));
-// })
-
-
-// const state = 'button';
-// // const stateStore = 'UpdateButton';
-
-// // const fileBase = `${base}/store/${state}/${state}.js`;
