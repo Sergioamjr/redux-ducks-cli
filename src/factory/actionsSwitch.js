@@ -3,7 +3,8 @@ export default function reducer(state = ${name}, action) {
     const { type, payload } = action
     switch (type) {`;
 
-const actionsSwitchMiddle = name => `case ${name.toUpperCase()}:
+const actionsSwitchMiddle = name => `
+    case ${name.toUpperCase()}:
         return { ...state, ...payload };
         break;`;
 
@@ -13,14 +14,8 @@ const actionsSwitchEnd = () => `default:
     }
 }`;
 
-const arr = ['button'];
-
-const actionsSwitch = name => {
-    return `
-    ${actionsSwitchInit(name)}
-    ${arr.map(item => actionsSwitchMiddle(item))}
-    ${actionsSwitchEnd()}
-    `;
+module.exports = {
+    actionsSwitchInit,
+    actionsSwitchMiddle,
+    actionsSwitchEnd
 };
-
-module.exports = actionsSwitch;

@@ -1,5 +1,5 @@
-const actionsImport = name => `import Store from './storeDefault.json'
-const { ${name} } = Store
+const actionsImport = name => `import Store from './storeDefault.json';
+const { ${name} } = Store;
 
 `;
 

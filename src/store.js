@@ -1,6 +1,9 @@
 /* eslint-disable */
 const { createFolder, createFile, base, appendContent, logError, getConfigFile } = require('./communs');
-const { createAction, actionsType, actionsSwitch, actionsImport, actionsIndex, provider } = require('./factory');
+const { createAction, actionsType,
+  actionsSwitchInit,
+  actionsSwitchMiddle,
+  actionsSwitchEnd, actionsImport, actionsIndex, provider } = require('./factory');
 /* eslint-enable */
 
 // Create Reducer
@@ -12,7 +15,6 @@ const createStore = () =>
         .catch(logError);
 
 const restObject = (Obj, add, value = {}) => JSON.stringify(Object.assign({}, Obj, { [add]: value }));
-
 
 
 // Create a new state store
@@ -29,11 +31,15 @@ const createStateStore = (state, stateInStore, value = {}, config) =>
                     stateInStore ? [stateInStore] : [])))
         .then(() => createFile(`${base}/store/${state}/${state}.js`, '')
             .then(() => {
+                const arr = ['Get', 'Set'];
+
                 if (stateInStore) {
-                    appendContent(`${base}/store/${state}/${state}.js`, actionsImport(stateInStore));
-                    appendContent(`${base}/store/${state}/${state}.js`, actionsType(stateInStore));
-                    appendContent(`${base}/store/${state}/${state}.js`, actionsSwitch(stateInStore));
-                    appendContent(`${base}/store/${state}/${state}.js`, createAction(stateInStore));
+                    appendContent(`${base}/store/${state}/${state}.js`, actionsImport(stateInStore))
+                        .then(() => appendContent(`${base}/store/${state}/${state}.js`, actionsType(stateInStore)))
+                        .then(() => appendContent(`${base}/store/${state}/${state}.js`, actionsSwitchInit(stateInStore)))
+                        .then(() => arr.map(item => appendContent(`${base}/store/${state}/${state}.js`, actionsSwitchMiddle(item))).join(''))
+                        .then(() => appendContent(`${base}/store/${state}/${state}.js`, actionsSwitchEnd(stateInStore)))
+                        .then(() => appendContent(`${base}/store/${state}/${state}.js`, createAction(stateInStore)));
                 }
             })
             .catch(logError)
