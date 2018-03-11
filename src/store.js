@@ -31,15 +31,14 @@ const createStateStore = (state, stateInStore, value = {}, config) =>
                     stateInStore ? [stateInStore] : [])))
         .then(() => createFile(`${base}/store/${state}/${state}.js`, '')
             .then(() => {
-                const arr = ['Get', 'Set'];
-
+                const arr = config[state];
                 if (stateInStore) {
-                    appendContent(`${base}/store/${state}/${state}.js`, actionsImport(stateInStore))
-                        .then(() => appendContent(`${base}/store/${state}/${state}.js`, actionsType(stateInStore)))
+                    appendContent(`${base}/store/${state}/${state}.js`, actionsImport(state))
+                        .then(() => arr.map(item => appendContent(`${base}/store/${state}/${state}.js`, actionsType(item))).join(''))
                         .then(() => appendContent(`${base}/store/${state}/${state}.js`, actionsSwitchInit(stateInStore)))
                         .then(() => arr.map(item => appendContent(`${base}/store/${state}/${state}.js`, actionsSwitchMiddle(item))).join(''))
                         .then(() => appendContent(`${base}/store/${state}/${state}.js`, actionsSwitchEnd(stateInStore)))
-                        .then(() => appendContent(`${base}/store/${state}/${state}.js`, createAction(stateInStore)));
+                        .then(() => arr.map(item => appendContent(`${base}/store/${state}/${state}.js`, createAction(item))).join(''));
                 }
             })
             .catch(logError)
