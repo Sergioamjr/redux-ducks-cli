@@ -7,12 +7,17 @@ const { createAction, actionsType,
 /* eslint-enable */
 
 // Create Reducer
-const createStore = () =>
-    createFolder(`${base}/store`)
-        .then(() => createFile(`${base}/store/storeDefault.json`, '{}'))
-        .then(() => createFile(`${base}/store/index.js`, ''))
-        .then(() => createFile(`${base}/index.js`, provider()))
-        .catch(logError);
+const createStore = async () => {
+    try {
+        await createFolder(`${base}/store`);
+        createFile(`${base}/store/storeDefault.json`, '{}');
+        createFile(`${base}/store/index.js`, '');
+        createFile(`${base}/index.js`, provider());
+    } catch(error) {
+        logError(error);
+    }
+};
+
 
 const restObject = (Obj, add, value) => JSON.stringify(Object.assign({}, Obj, { [add]: value }));
 
