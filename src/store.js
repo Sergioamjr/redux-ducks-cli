@@ -22,7 +22,7 @@ const createStore = async () => {
 const createStateStore = async (state, stateInStore, value = {}, config) => {
     const baseOfState = `${base}/store/${state}/${state}.js`;
     const actionsSalved = hasActionSalved(config, state, stateInStore);
-    const configKeys = JSON.parse(restObject(config, state, ''));
+    const configKeys = Object.keys(JSON.parse(restObject(config, state, '')));
 
     try {
         createFolder(`${base}/store/${state}`);
@@ -30,7 +30,7 @@ const createStateStore = async (state, stateInStore, value = {}, config) => {
         createFile(`${base}/store/storeDefault.json`, restObject(JSON.parse(StoreDefault), state, value));
         createFile(`${base}/reduxConfig.json`, restObject(config, state, actionsSalved));
         await createFile(`${base}/store/index.js`, '');
-        Object.keys(configKeys).map(item => appendContent(`${base}/store/index.js`, actionsIndex(item))).join('');
+        configKeys.map(item => appendContent(`${base}/store/index.js`, actionsIndex(item))).join('');
         await createFile(baseOfState, '');
         if(actionsSalved.length > 0) {
             await appendContent(baseOfState, actionsImport(state));
