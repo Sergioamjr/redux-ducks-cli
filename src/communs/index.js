@@ -34,6 +34,24 @@ const createConfig = (path, content = '') => returnPromise(writeFile, path, cont
 
 const getConfigFile = (path = `${base}/reduxConfig.json`) => readFilePromise(readFile, path);
 
+const restObject = (Obj, add, value) => JSON.stringify(Object.assign({}, Obj, { [add]: value }));
+
+const hasActionSalved = (config, state, stateInStore) => {
+    if(config[state]) {
+        if(stateInStore && !config[state].includes(stateInStore)) {
+            return config[state].concat([stateInStore]);
+        } else {
+            return config[state];
+        }
+    } else {
+        if(stateInStore) {
+            return stateInStore;
+        } else {
+            return [];
+        }
+    }
+};
+
 module.exports = {
     createFolder,
     createFile,
@@ -44,4 +62,6 @@ module.exports = {
     createConfig,
     getConfigFile,
     returnPromise,
+    restObject,
+    hasActionSalved
 };
