@@ -26,7 +26,6 @@ if (state) {
         .then(data => JSON.parse(data))
         .then(config => createStateStore(state, action, value, config));
 }
-
 // REMOVE STATE
 
 // ADD ACTION

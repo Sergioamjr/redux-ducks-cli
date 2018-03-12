@@ -8,7 +8,8 @@ const actionsSwitchMiddle = name => `
         return { ...state, ...payload };
         break;`;
 
-const actionsSwitchEnd = () => `default:
+const actionsSwitchEnd = () => `
+    default:
     return state;
         break;
     }
