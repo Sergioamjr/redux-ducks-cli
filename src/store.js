@@ -61,7 +61,17 @@ const createStateStore = async (state, stateInStore, value = {}, config) => {
     }
 };
 
+const removeStateStore = (state, config) => {
+    if (config[state]) {
+        delete config[state];
+        createFile(`${base}/reduxConfig.json`, JSON.stringify(Object.assign({}, config)));
+    } else {
+        throw('State not found');
+    }
+};
+
 module.exports = {
     createStore,
     createStateStore,
+    removeStateStore,
 };
