@@ -25,31 +25,29 @@ npm install -g redux-ducks-cli
 Para iniciar a configuração inicial do Redux:
 
 ```bash
-redux-ducks init
+redux-ducks --init
 ```
 
-Para criar uma Store:
+Para criar um estado na Store:
 
 ```bash
-redux-ducks <store> <default_value>
+redux-ducks  --state=<string> //ex. --state=User
 ```
 
-Para criar um Action Creator:
+Para remover um estado na Store:
 
 ```bash
-redux-ducks add <store> <action_creator_name> <concat/spread/decrement/increment>
+redux-ducks --removeState=<string> //ex. --removeState=User
 ```
 
-Estamos declarando para adicionar na Store a Action Creator. Caso essa Store não exista, ela será criada.
-
-Para remover um Action Creator:
+Para criar uma Action:
 
 ```bash
-redux-ducks remove <store> <action_creator_name>
+redux-ducks add --state=<string> --action=<string> //ex. --state=User --action=SetUser
 ```
 
-Para renomear uma Action Creator:
+Para remover a Action de um estado:
 
 ```bash
-redux-ducks rename <store> <action_creator_old_name> <action_creator_new_name>
+redux-ducks add --state=<string> --removeAction=<string> //ex. --state=User --removeAction=SetUser
 ```
