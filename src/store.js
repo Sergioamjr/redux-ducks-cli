@@ -7,6 +7,8 @@ const {
   logError,
   getConfigFile,
   restObject,
+  deleteFolder,
+  deleteFile,
   hasActionSalved } = require('./communs');
 
 const {
@@ -33,7 +35,7 @@ const createStore = async () => {
     }
 };
 
-// Create a new state store
+// Create a new state in store and config
 const createStateStore = async (state, stateInStore, value = {}, config) => {
     const baseOfState = `${base}/store/${state}/${state}.js`;
     const actionsSalved = hasActionSalved(config, state, stateInStore);
@@ -45,9 +47,9 @@ const createStateStore = async (state, stateInStore, value = {}, config) => {
         const StoreDefault = await getConfigFile(`${base}/store/storeDefault.json`);
         createFile(`${base}/store/storeDefault.json`, restObject(JSON.parse(StoreDefault), state, value));
         createFile(`${base}/reduxConfig.json`, restObject(config, state, actionsSalved));
-        await createFile(`${base}/store/index.js`, '');
+        await createFile(`${base}/store/index.js`);
         configKeys.map(item => appendContent(`${base}/store/index.js`, actionsIndex(item))).join('');
-        await createFile(baseOfState, '');
+        await createFile(baseOfState);
         if(actionsSalved.length > 0) {
             await appendContent(baseOfState, actionsImport(state));
             actionsSalved.map(item => appendContent(baseOfState, actionsType(item))).join('');
@@ -61,12 +63,22 @@ const createStateStore = async (state, stateInStore, value = {}, config) => {
     }
 };
 
-const removeStateStore = (state, config) => {
-    if (config[state]) {
-        delete config[state];
-        createFile(`${base}/reduxConfig.json`, JSON.stringify(Object.assign({}, config)));
-    } else {
-        throw('State not found');
+// Remove state from store and config
+const removeStateStore = async (state, config, store) => {
+    try {
+        if (config[state]) {
+            delete config[state];
+            createFile(`${base}/reduxConfig.json`, JSON.stringify(Object.assign({}, config)));
+        }
+        if (store[state]) {
+            delete store[state];
+            createFile(`${base}/store/storeDefault.json`, JSON.stringify(Object.assign({}, store)));
+        }
+        await deleteFile(`${base}/store/${state}/${state}.js`);
+        await deleteFile(`${base}/store/${state}/index.js`);
+        await deleteFolder(`${base}/store/${state}`);
+    } catch(error) {
+        logError(error);
     }
 };
 

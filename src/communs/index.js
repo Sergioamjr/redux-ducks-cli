@@ -1,4 +1,4 @@
-const { existsSync, mkdir, writeFile, appendFile, readFile } = require('fs');
+const { existsSync, mkdir, writeFile, appendFile, readFile, rmdir, unlink } = require('fs');
 
 const base = 'redux';
 
@@ -26,7 +26,7 @@ const createFolder = path => new Promise((resolve, reject) =>
     !existsSync(path) ? mkdir(path, err => err ? reject() : resolve()) : resolve()
 );
 
-const createFile = (path, content) => returnPromise(writeFile, path, content);
+const createFile = (path, content = '') => returnPromise(writeFile, path, content);
 
 const appendContent = (file, content) => returnPromise(appendFile, file, content);
 
@@ -35,6 +35,10 @@ const createConfig = (path, content = '') => returnPromise(writeFile, path, cont
 const getConfigFile = (path = `${base}/reduxConfig.json`) => readFilePromise(readFile, path);
 
 const restObject = (Obj, add, value) => JSON.stringify(Object.assign({}, Obj, { [add]: value }));
+
+const deleteFolder = path => new Promise((resolve, reject) => rmdir(path, err => err ? reject('Errr', err) : resolve('Success')));
+
+const deleteFile = file => new Promise((resolve, reject) => unlink(file, err => err ? reject('Erro ao excluir') : resolve()));
 
 const hasActionSalved = (config, state, stateInStore) => {
     if(config[state]) {
@@ -63,5 +67,7 @@ module.exports = {
     getConfigFile,
     returnPromise,
     restObject,
-    hasActionSalved
+    hasActionSalved,
+    deleteFolder,
+    deleteFile
 };

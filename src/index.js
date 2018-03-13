@@ -4,10 +4,6 @@ const { createStore, createStateStore, removeStateStore } = require('./store');
 const { createFolder, base, logError, logSuccess, createFile, getConfigFile } = require('./communs');
 const { init, state, action, value, remove } = argv;
 
-/* eslint-disable */
-// console.log(init, state, action, value);
-/* eslint-enable */
-
 const starter = async () => {
     try {
         await createFolder(base);
@@ -34,8 +30,10 @@ const addState = async () => {
 const removeState = async (state) => {
     try {
         const file  = await getConfigFile();
+        const store = await getConfigFile(`${base}/store/storeDefault.json`);
         const fileParsed = await JSON.parse(file);
-        removeStateStore(state, fileParsed);
+        const storeParsed = await JSON.parse(store);
+        await removeStateStore(state, fileParsed, storeParsed);
     } catch(error) {
         logError(error);
     }
@@ -55,6 +53,10 @@ if (state && !remove) {
 if(remove) {
     removeState(state);
 }
+
+// deleteFolder('tess')
+//     .then(s => console.log('success', s))
+//     .catch(err => console.log('error', err));
 
 // ADD ACTION
 
