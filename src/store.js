@@ -40,7 +40,7 @@ const createStateStore = async (state, stateInStore, value = {}, config) => {
     const configKeys = Object.keys(JSON.parse(restObject(config, state, '')));
 
     try {
-        createFolder(`${base}/store/${state}`);
+        await createFolder(`${base}/store/${state}`);
         createFile(`${base}/store/${state}/index.js`, exportDefault(state));
         const StoreDefault = await getConfigFile(`${base}/store/storeDefault.json`);
         createFile(`${base}/store/storeDefault.json`, restObject(JSON.parse(StoreDefault), state, value));
