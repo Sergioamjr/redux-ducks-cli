@@ -1,8 +1,8 @@
 const argv = require('yargs').argv;
 const { createReducer } = require('./reducers');
-const { createStore, createStateStore, removeStateStore } = require('./store');
+const { createStore, createStateStore, removeStateStore, removeActionState } = require('./store');
 const { createFolder, base, logError, logSuccess, createFile, getConfigFile } = require('./communs');
-const { init, state, action, value, removeState: removeState_ } = argv;
+const { init, state, action, value, removeState: removeState_, removeAction: removeAction_ } = argv;
 
 const starter = async () => {
     try {
@@ -39,19 +39,33 @@ const removeState = async (state) => {
     }
 };
 
+const removeAction = async (action, state) => {
+    try {
+        const file  = await getConfigFile();
+        const fileParsed = await JSON.parse(file);
+        await removeActionState(action, state, fileParsed);
+    } catch(error) {
+        logError(error);
+    }
+};
+
 // Start
 if (init) {
     starter();
 }
 
 // Create a state
-if (state) {
+if (state && !removeAction_) {
     addState();
 }
 
 // Remove a state
 if(removeState_) {
     removeState(removeState_);
+}
+
+if(removeAction_) {
+    removeAction(removeAction_, state);
 }
 
 // Remove an action
