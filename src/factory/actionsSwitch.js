@@ -3,9 +3,9 @@ export default function reducer(state = ${name}, action) {
     const { type, payload } = action
     switch (type) {`;
 
-const actionsSwitchMiddle = name => `
+const actionsSwitchMiddle = (name, howchange = '{ ...state, ...payload }') => `
     case ${name.toUpperCase()}:
-        return { ...state, ...payload };
+        return ${howchange};
         break;`;
 
 const actionsSwitchEnd = () => `

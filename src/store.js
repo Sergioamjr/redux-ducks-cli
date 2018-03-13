@@ -35,8 +35,14 @@ const createStore = async () => {
     }
 };
 
+const hasChange = (item, state, change) => {
+    if (change && item === state) {
+        return change;
+    }
+};
+
 // Create a new state in store and config
-const createStateStore = async (state, stateInStore, value = {}, config) => {
+const createStateStore = async (state, stateInStore, value = {}, config, howChange = false) => {
     const baseOfState = `${base}/store/${state}/${state}.js`;
     const actionsSalved = hasActionSalved(config, state, stateInStore);
     const configKeys = Object.keys(JSON.parse(restObject(config, state, '')));
@@ -54,7 +60,7 @@ const createStateStore = async (state, stateInStore, value = {}, config) => {
             await appendContent(baseOfState, actionsImport(state));
             actionsSalved.map(item => appendContent(baseOfState, actionsType(item))).join('');
             await appendContent(baseOfState, actionsSwitchInit(state));
-            actionsSalved.map(item => appendContent(baseOfState, actionsSwitchMiddle(item))).join('');
+            actionsSalved.map(item => appendContent(baseOfState, actionsSwitchMiddle(item, hasChange(item, stateInStore, howChange)))).join('');
             await appendContent(baseOfState, actionsSwitchEnd());
             actionsSalved.map(item => appendContent(baseOfState, createAction(item))).join('');
         }

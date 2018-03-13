@@ -51,3 +51,15 @@ Para remover a Action de um estado:
 ```bash
 redux-ducks add --state=<string> --removeAction=<string> //ex. --state=User --removeAction=SetUser
 ```
+
+Para definir o valor padrão do estado:
+
+```bash
+redux-ducks add --state=<string> --valueDefault=<string> //ex. --state=User --valueDefault=1
+```
+
+Para alterar o comportamento padrão da action:
+
+```js
+redux-ducks add --state=<string> --action=<string> --change=<string> //ex. --state=User --action=SetUser --change=state.concat[payload]
+```
