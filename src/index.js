@@ -64,8 +64,8 @@ if(removeState_) {
     removeState(removeState_);
 }
 
+// Remove an action
 if(removeAction_) {
     removeAction(removeAction_, state);
 }
 
-// Remove an action

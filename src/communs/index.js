@@ -22,6 +22,10 @@ const readFilePromise = (method, path) =>
     new Promise((resolve, reject) =>
         method(path, 'utf8', (err, data) => err ? reject(err) : resolve(data)));
 
+const singlePromise = (fn, file) => new Promise((resolve, reject) =>
+    fn(file, err => err ? reject(err) : resolve())
+);
+
 const createFolder = path => new Promise((resolve, reject) =>
     !existsSync(path) ? mkdir(path, err => err ? reject() : resolve()) : resolve()
 );
@@ -36,9 +40,9 @@ const getConfigFile = (path = `${base}/reduxConfig.json`) => readFilePromise(rea
 
 const restObject = (Obj, add, value) => JSON.stringify(Object.assign({}, Obj, { [add]: value }));
 
-const deleteFolder = path => new Promise((resolve, reject) => rmdir(path, err => err ? reject('Errr', err) : resolve('Success')));
+const deleteFolder = path => singlePromise(rmdir, path);
 
-const deleteFile = file => new Promise((resolve, reject) => unlink(file, err => err ? reject('Erro ao excluir') : resolve()));
+const deleteFile = file => singlePromise(unlink, file);
 
 const hasActionSalved = (config, state, stateInStore) => {
     if(config[state]) {
