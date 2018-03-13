@@ -1,9 +1,24 @@
 /* eslint-disable */
-const { createFolder, createFile, base, appendContent, logError, getConfigFile, restObject, hasActionSalved } = require('./communs');
-const { createAction, actionsType,
+const {
+  createFolder,
+  createFile,
+  base,
+  appendContent,
+  logError,
+  getConfigFile,
+  restObject,
+  hasActionSalved } = require('./communs');
+
+const {
+  createAction,
+  actionsType,
   actionsSwitchInit,
   actionsSwitchMiddle,
-  actionsSwitchEnd, actionsImport, actionsIndex, provider } = require('./factory');
+  actionsSwitchEnd,
+  exportDefault,
+  actionsImport,
+  actionsIndex,
+  provider } = require('./factory');
 /* eslint-enable */
 
 // Create Reducer
@@ -26,6 +41,7 @@ const createStateStore = async (state, stateInStore, value = {}, config) => {
 
     try {
         createFolder(`${base}/store/${state}`);
+        createFile(`${base}/store/${state}/index.js`, exportDefault(state));
         const StoreDefault = await getConfigFile(`${base}/store/storeDefault.json`);
         createFile(`${base}/store/storeDefault.json`, restObject(JSON.parse(StoreDefault), state, value));
         createFile(`${base}/reduxConfig.json`, restObject(config, state, actionsSalved));
