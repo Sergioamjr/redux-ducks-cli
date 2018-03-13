@@ -2,7 +2,7 @@ const argv = require('yargs').argv;
 const { createReducer } = require('./reducers');
 const { createStore, createStateStore, removeStateStore } = require('./store');
 const { createFolder, base, logError, logSuccess, createFile, getConfigFile } = require('./communs');
-const { init, state, action, value, remove } = argv;
+const { init, state, action, value, removeState: removeState_ } = argv;
 
 const starter = async () => {
     try {
@@ -39,25 +39,19 @@ const removeState = async (state) => {
     }
 };
 
-// INIT
+// Start
 if (init) {
     starter();
 }
 
-// CREATE STATE
-if (state && !remove) {
+// Create a state
+if (state) {
     addState();
 }
 
-// REMOVE STATE
-if(remove) {
-    removeState(state);
+// Remove a state
+if(removeState_) {
+    removeState(removeState_);
 }
 
-// deleteFolder('tess')
-//     .then(s => console.log('success', s))
-//     .catch(err => console.log('error', err));
-
-// ADD ACTION
-
-// REMOVE ACTION
+// Remove an action
