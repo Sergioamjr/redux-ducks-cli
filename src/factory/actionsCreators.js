@@ -1,5 +1,5 @@
 const createAction = name => `
-export function action${name}(payload) {
+export function ${name}(payload) {
     return {
       type: ${name.toUpperCase()},
       payload

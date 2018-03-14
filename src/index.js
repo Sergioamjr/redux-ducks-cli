@@ -1,8 +1,38 @@
-const argv = require('yargs').argv;
+const yargs = require('yargs');
 const { createReducer } = require('./reducers');
 const { createStore, createStateStore, removeStateStore, removeActionState } = require('./store');
 const { createFolder, base, logError, logSuccess, createFile, getConfigFile } = require('./communs');
-const { init, state, action, valueDefault, change, removeState: removeState_, removeAction: removeAction_ } = argv;
+
+// Argsv detalhes
+const yarg = yargs
+    .option('init', {
+        describe: 'Inicia o projeto',
+        alias: 'i'
+    })
+    .option('state', {
+        describe: 'Cria um estado na aplicação',
+        alias: 's'
+    })
+    .option('action', {
+        describe: 'Adiciona uma action em um state',
+        alias: 'a'
+    })
+    .option('value', {
+        describe: 'Define o valor padrão de um state',
+        alias: 'v'
+    })
+    .option('removeState', {
+        describe: 'Remove um estado',
+        alias: 'r'
+    })
+    .option('removeAction', {
+        describe: 'Remove uma Action de um Estado',
+        alias: 'd'
+    })
+    .help()
+    .argv;
+
+const { init, state, action, value, change, removeState: removeState_, removeAction: removeAction_ } = yarg;
 
 const starter = async () => {
     try {
@@ -10,7 +40,7 @@ const starter = async () => {
         createFile(`${base}/reduxConfig.json`, '{}');
         createReducer();
         createStore();
-        logSuccess();
+        logSuccess('Projeto iniciado com sucesso.');
     } catch(error) {
         logError(error);
     }
@@ -20,8 +50,8 @@ const addState = async () => {
     try {
         const file  = await getConfigFile();
         const fileParsed = await JSON.parse(file);
-        createStateStore(state, action, valueDefault, fileParsed, change);
-        logSuccess();
+        createStateStore(state, action, value, fileParsed, change);
+        logSuccess(`Estado ${state} criado com sucesso.`);
     } catch(error) {
         logError(error);
     }
@@ -34,6 +64,7 @@ const removeState = async (state) => {
         const fileParsed = await JSON.parse(file);
         const storeParsed = await JSON.parse(store);
         await removeStateStore(state, fileParsed, storeParsed);
+        logSuccess(`Estado ${state} removido com sucesso.`);
     } catch(error) {
         logError(error);
     }
@@ -44,6 +75,7 @@ const removeAction = async (action, state) => {
         const file  = await getConfigFile();
         const fileParsed = await JSON.parse(file);
         await removeActionState(action, state, fileParsed);
+        logSuccess(`Action ${action} removido do estado ${state} com sucesso.`);
     } catch(error) {
         logError(error);
     }
@@ -55,7 +87,7 @@ if (init) {
 }
 
 // Create a state
-if (state && !removeAction_) {
+if (state && !removeAction_ && !removeState_) {
     addState();
 }
 
