@@ -9,6 +9,8 @@ const {
   restObject,
   deleteFolder,
   deleteFile,
+  deleteAndSave,
+  changeActionBehavior,
   hasActionSalved } = require('./communs');
 
 const {
@@ -35,12 +37,6 @@ const createStore = async () => {
     }
 };
 
-const hasChange = (item, state, change) => {
-    if (change && item === state) {
-        return change;
-    }
-};
-
 // Create a new state in store and config
 const createStateStore = async (state, stateInStore, value = {}, config, howChange = false) => {
     const baseOfState = `${base}/store/${state}/${state}.js`;
@@ -60,7 +56,7 @@ const createStateStore = async (state, stateInStore, value = {}, config, howChan
             await appendContent(baseOfState, actionsImport(state));
             actionsSalved.map(item => appendContent(baseOfState, actionsType(item))).join('');
             await appendContent(baseOfState, actionsSwitchInit(state));
-            actionsSalved.map(item => appendContent(baseOfState, actionsSwitchMiddle(item, hasChange(item, stateInStore, howChange)))).join('');
+            actionsSalved.map(item => appendContent(baseOfState, actionsSwitchMiddle(item, changeActionBehavior(item, stateInStore, howChange)))).join('');
             await appendContent(baseOfState, actionsSwitchEnd());
             actionsSalved.map(item => appendContent(baseOfState, createAction(item))).join('');
         }
@@ -69,18 +65,11 @@ const createStateStore = async (state, stateInStore, value = {}, config, howChan
     }
 };
 
-const deleteAndSave = (config, state, base) => {
-    if (config[state]) {
-        delete config[state];
-        createFile(base, JSON.stringify(Object.assign({}, config)));
-    }
-};
-
 // Remove state from store and config
 const removeStateStore = async (state, config, store) => {
     try {
         deleteAndSave(config, state, `${base}/reduxConfig.json`);
-        deleteAndSave(store, state, `${base}/reduxConfig.json`);
+        deleteAndSave(store, state, `${base}/store/storeDefault.json`);
         await deleteFile(`${base}/store/${state}/${state}.js`);
         await deleteFile(`${base}/store/${state}/index.js`);
         await deleteFolder(`${base}/store/${state}`);

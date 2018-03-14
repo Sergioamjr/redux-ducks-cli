@@ -53,10 +53,23 @@ const hasActionSalved = (config, state, stateInStore) => {
         }
     } else {
         if(stateInStore) {
-            return stateInStore;
+            return [stateInStore];
         } else {
             return [];
         }
+    }
+};
+
+const deleteAndSave = (config, state, base) => {
+    if (config[state]) {
+        delete config[state];
+        createFile(base, JSON.stringify(Object.assign({}, config)));
+    }
+};
+
+const changeActionBehavior = (item, state, change) => {
+    if (change && item === state) {
+        return change;
     }
 };
 
@@ -73,5 +86,7 @@ module.exports = {
     restObject,
     hasActionSalved,
     deleteFolder,
-    deleteFile
+    deleteFile,
+    deleteAndSave,
+    changeActionBehavior,
 };
