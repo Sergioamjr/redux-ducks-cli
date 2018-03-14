@@ -4,13 +4,13 @@ const base = 'redux';
 
 const logError = error => {
     /* eslint-disable */
-    console.log('Not possible create redux config. Reason: ', error);
+    console.log('Não foi possível completar sua ação, ', error);
     /* eslint-enable */
 };
 
-const logSuccess = () => {
+const logSuccess = (message = 'Created with success') => {
     /* eslint-disable */
-    console.log('Created with success');
+    console.log(message);
     /* eslint-enable */
 };
 
@@ -23,7 +23,7 @@ const readFilePromise = (method, path) =>
         method(path, 'utf8', (err, data) => err ? reject(err) : resolve(data)));
 
 const singlePromise = (fn, file) => new Promise((resolve, reject) =>
-    fn(file, err => err ? reject(err) : resolve())
+    fn(file, err => err ? reject('State not found in config.') : resolve())
 );
 
 const createFolder = path => new Promise((resolve, reject) =>

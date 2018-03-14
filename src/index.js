@@ -10,7 +10,7 @@ const starter = async () => {
         createFile(`${base}/reduxConfig.json`, '{}');
         createReducer();
         createStore();
-        logSuccess();
+        logSuccess('Projeto iniciado com sucesso.');
     } catch(error) {
         logError(error);
     }
@@ -21,7 +21,7 @@ const addState = async () => {
         const file  = await getConfigFile();
         const fileParsed = await JSON.parse(file);
         createStateStore(state, action, valueDefault, fileParsed, change);
-        logSuccess();
+        logSuccess(`Estado ${state} criado com sucesso.`);
     } catch(error) {
         logError(error);
     }
@@ -34,6 +34,7 @@ const removeState = async (state) => {
         const fileParsed = await JSON.parse(file);
         const storeParsed = await JSON.parse(store);
         await removeStateStore(state, fileParsed, storeParsed);
+        logSuccess(`Estado ${state} removido com sucesso.`);
     } catch(error) {
         logError(error);
     }
@@ -44,6 +45,7 @@ const removeAction = async (action, state) => {
         const file  = await getConfigFile();
         const fileParsed = await JSON.parse(file);
         await removeActionState(action, state, fileParsed);
+        logSuccess(`Action ${action} removido do estado ${state} com sucesso.`);
     } catch(error) {
         logError(error);
     }

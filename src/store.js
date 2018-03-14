@@ -37,8 +37,19 @@ const createStore = async () => {
     }
 };
 
+const createSwitchForEach = async (newConfigState, baseOfState, state, action = null, howChange = false) => {
+    if(newConfigState.length > 0) {
+        await appendContent(baseOfState, actionsImport(state));
+        newConfigState.map(item => appendContent(baseOfState, actionsType(item))).join('');
+        await appendContent(baseOfState, actionsSwitchInit(state));
+        newConfigState.map(item => appendContent(baseOfState, actionsSwitchMiddle(item, changeActionBehavior(item, action, howChange)))).join('');
+        await appendContent(baseOfState, actionsSwitchEnd());
+        newConfigState.map(item => appendContent(baseOfState, createAction(item))).join('');
+    }
+};
+
 // Create a new state in store and config
-const createStateStore = async (state, stateInStore, value = {}, config, howChange = false) => {
+const createStateStore = async (state, stateInStore, value = {}, config, howChange) => {
     const baseOfState = `${base}/store/${state}/${state}.js`;
     const actionsSalved = hasActionSalved(config, state, stateInStore);
     const configKeys = Object.keys(JSON.parse(restObject(config, state, '')));
@@ -52,14 +63,7 @@ const createStateStore = async (state, stateInStore, value = {}, config, howChan
         await createFile(`${base}/store/index.js`);
         configKeys.map(item => appendContent(`${base}/store/index.js`, actionsIndex(item))).join('');
         await createFile(baseOfState);
-        if(actionsSalved.length > 0) {
-            await appendContent(baseOfState, actionsImport(state));
-            actionsSalved.map(item => appendContent(baseOfState, actionsType(item))).join('');
-            await appendContent(baseOfState, actionsSwitchInit(state));
-            actionsSalved.map(item => appendContent(baseOfState, actionsSwitchMiddle(item, changeActionBehavior(item, stateInStore, howChange)))).join('');
-            await appendContent(baseOfState, actionsSwitchEnd());
-            actionsSalved.map(item => appendContent(baseOfState, createAction(item))).join('');
-        }
+        createSwitchForEach(actionsSalved, baseOfState, state, stateInStore, howChange);
     } catch(error) {
         logError(error);
     }
@@ -85,14 +89,9 @@ const removeActionState = async (action, state, config) => {
         const newConfigState = config[state].filter(item => item !== action);
         await createFile(`${base}/reduxConfig.json`, restObject(config, state, newConfigState));
         await createFile(baseOfState);
-        if(newConfigState.length > 0) {
-            await appendContent(baseOfState, actionsImport(state));
-            newConfigState.map(item => appendContent(baseOfState, actionsType(item))).join('');
-            await appendContent(baseOfState, actionsSwitchInit(state));
-            newConfigState.map(item => appendContent(baseOfState, actionsSwitchMiddle(item))).join('');
-            await appendContent(baseOfState, actionsSwitchEnd());
-            newConfigState.map(item => appendContent(baseOfState, createAction(item))).join('');
-        }
+        createSwitchForEach(newConfigState, baseOfState, state);
+    } else {
+        throw(`Action ${action} não encontrada no estado ${state}`);
     }
 };
 
