@@ -23,7 +23,7 @@ const readFilePromise = (method, path) =>
         method(path, 'utf8', (err, data) => err ? reject(err) : resolve(data)));
 
 const singlePromise = (fn, file) => new Promise((resolve, reject) =>
-    fn(file, err => err ? reject('State not found in config.') : resolve())
+    fn(file, err => err ? reject(`Estado ${file} não encontrado.`) : resolve())
 );
 
 const createFolder = path => new Promise((resolve, reject) =>
