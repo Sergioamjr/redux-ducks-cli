@@ -21,6 +21,7 @@ const {
   actionsSwitchEnd,
   exportDefault,
   actionsImport,
+  storeDefault,
   actionsIndex,
   provider } = require('./factory');
 /* eslint-enable */
@@ -29,7 +30,8 @@ const {
 const createStore = async () => {
     try {
         await createFolder(`${base}/store`);
-        createFile(`${base}/store/storeDefault.json`, '{}');
+        createFile(`${base}/store/storeConfig.json`, '{}');
+        createFile(`${base}/store/storeDefault.js`, storeDefault('{}'));
         createFile(`${base}/store/index.js`, '');
         createFile(`${base}/index.js`, provider());
     } catch(error) {
@@ -57,9 +59,10 @@ const createStateStore = async (state, stateInStore, value = {}, config, howChan
     try {
         await createFolder(`${base}/store/${state}`);
         createFile(`${base}/store/${state}/index.js`, exportDefault(state));
-        const StoreDefault = await getConfigFile(`${base}/store/storeDefault.json`);
-        createFile(`${base}/store/storeDefault.json`, restObject(JSON.parse(StoreDefault), state, value));
+        const StoreDefault = await getConfigFile(`${base}/store/storeConfig.json`);
+        createFile(`${base}/store/storeConfig.json`, restObject(JSON.parse(StoreDefault), state, value));
         createFile(`${base}/reduxConfig.json`, restObject(config, state, actionsSalved));
+        await createFile(`${base}/store/storeDefault.js`, storeDefault(restObject(JSON.parse(StoreDefault), state, value)));
         await createFile(`${base}/store/index.js`);
         configKeys.map(item => appendContent(`${base}/store/index.js`, actionsIndex(item))).join('');
         await createFile(baseOfState);
@@ -70,10 +73,9 @@ const createStateStore = async (state, stateInStore, value = {}, config, howChan
 };
 
 // Remove state from store and config
-const removeStateStore = async (state, config, store) => {
+const removeStateStore = async (state, config) => {
     try {
-        deleteAndSave(config, state, `${base}/reduxConfig.json`);
-        deleteAndSave(store, state, `${base}/store/storeDefault.json`);
+        await deleteAndSave(config, state, storeDefault);
         await deleteFile(`${base}/store/${state}/${state}.js`);
         await deleteFile(`${base}/store/${state}/index.js`);
         await deleteFolder(`${base}/store/${state}`);

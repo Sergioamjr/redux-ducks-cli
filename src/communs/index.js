@@ -60,12 +60,19 @@ const hasActionSalved = (config, state, stateInStore) => {
     }
 };
 
-const deleteAndSave = (config, state, base) => {
-    if (config[state]) {
-        delete config[state];
-        createFile(base, JSON.stringify(Object.assign({}, config)));
+const deleteAndSave = (config, state, format) => new Promise(async (resolve, reject) => {
+    try {
+        if (config[state]) {
+            delete config[state];
+            await createFile(`${base}/reduxConfig.json`, JSON.stringify(config));
+            await createFile(`${base}/store/storeConfig.json`, JSON.stringify(config));
+            await createFile(`${base}/store/storeDefault.js`, format(JSON.stringify(config)));
+        }
+        resolve();
+    } catch(err) {
+        reject(err);
     }
-};
+});
 
 const changeActionBehavior = (item, state, change) => {
     if (change && item === state) {

@@ -10,6 +10,7 @@ const actionsIndex = require('./actionsIndex');
 const provider = require('./provider');
 const reducer = require('./reducer');
 const exportDefault = require('./exportDefault');
+const storeDefault = require('./storeDefault');
 
 module.exports = {
     exportDefault,
@@ -19,6 +20,7 @@ module.exports = {
     actionsSwitchMiddle,
     actionsSwitchEnd,
     actionsImport,
+    storeDefault,
     actionsIndex,
     provider,
     reducer,
