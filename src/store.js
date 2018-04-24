@@ -1,15 +1,16 @@
 /* eslint-disable */
 const {
-  createFolder,
-  createFile,
   base,
-  appendContent,
   logError,
-  getConfigFile,
-  restObject,
-  deleteFolder,
+  createFile,
   deleteFile,
+  logSuccess,
+  restObject,
+  createFolder,
+  deleteFolder,
+  getConfigFile,
   deleteAndSave,
+  appendContent,
   changeActionBehavior,
   hasActionSalved } = require('./communs');
 
@@ -73,12 +74,15 @@ const createStateStore = async (state, stateInStore, value = {}, config, howChan
 };
 
 // Remove state from store and config
-const removeStateStore = async (state, config) => {
+const removeStateStore = async (state, config, store) => {
     try {
-        await deleteAndSave(config, state, storeDefault);
+        const configKeys = Object.keys(JSON.parse(restObject(config, state, '')));
+        await deleteAndSave(state, config, store, storeDefault);
         await deleteFile(`${base}/store/${state}/${state}.js`);
         await deleteFile(`${base}/store/${state}/index.js`);
         await deleteFolder(`${base}/store/${state}`);
+        configKeys.map(item => createFile(`${base}/store/index.js`, actionsIndex(item))).join('');
+        logSuccess(`Estado ${state} removido com sucesso.`);
     } catch(error) {
         logError(error);
     }

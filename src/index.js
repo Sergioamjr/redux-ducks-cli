@@ -61,12 +61,11 @@ const addState = async () => {
 
 const removeState = async (state) => {
     try {
-        const file  = await getConfigFile();
-        // const store = await getConfigFile(`${base}/store/storeConfig.json`);
-        const fileParsed = await JSON.parse(file);
-        // const storeParsed = await JSON.parse(store);
-        await removeStateStore(state, fileParsed, fileParsed, fileParsed);
-        logSuccess(`Estado ${state} removido com sucesso.`);
+        const configFile  = await getConfigFile();
+        const configStore = await getConfigFile(`${base}/store/storeConfig.json`);
+        const fileParsed = await JSON.parse(configFile);
+        const storeParsed = await JSON.parse(configStore);
+        await removeStateStore(state, fileParsed, storeParsed);
     } catch(error) {
         logError(error);
     }

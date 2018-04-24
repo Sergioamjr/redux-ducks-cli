@@ -4,11 +4,11 @@ const base = 'redux';
 
 const logError = error => {
     /* eslint-disable */
-    console.log('Não foi possível completar sua ação, ', error);
+    console.log('Não foi possível completar sua ação: ', error);
     /* eslint-enable */
 };
 
-const logSuccess = (message = 'Created with success') => {
+const logSuccess = (message = 'Criado com sucesso.') => {
     /* eslint-disable */
     console.log(message);
     /* eslint-enable */
@@ -38,6 +38,8 @@ const createConfig = (path, content = '') => returnPromise(writeFile, path, cont
 
 const getConfigFile = (path = `${base}/reduxConfig.json`) => readFilePromise(readFile, path);
 
+const getConfigStore = (path = `${base}/store/storeConfig.json`) => readFilePromise(readFile, path);
+
 const restObject = (Obj, add, value) => JSON.stringify(Object.assign({}, Obj, { [add]: value }));
 
 const deleteFolder = path => singlePromise(rmdir, path);
@@ -60,14 +62,13 @@ const hasActionSalved = (config, state, stateInStore) => {
     }
 };
 
-const deleteAndSave = (config, state, format) => new Promise(async (resolve, reject) => {
+const deleteAndSave = (state, config, store, format) => new Promise(async (resolve, reject) => {
     try {
-        if (config[state]) {
-            delete config[state];
-            await createFile(`${base}/reduxConfig.json`, JSON.stringify(config));
-            await createFile(`${base}/store/storeConfig.json`, JSON.stringify(config));
-            await createFile(`${base}/store/storeDefault.js`, format(JSON.stringify(config)));
-        }
+        config[state] && delete config[state];
+        store[state] && delete store[state];
+        await createFile(`${base}/reduxConfig.json`, JSON.stringify(config));
+        await createFile(`${base}/store/storeConfig.json`, JSON.stringify(store));
+        await createFile(`${base}/store/storeDefault.js`, format(JSON.stringify(store)));
         resolve();
     } catch(err) {
         reject(err);
@@ -81,19 +82,20 @@ const changeActionBehavior = (item, state, change) => {
 };
 
 module.exports = {
-    createFolder,
-    createFile,
-    appendContent,
     base,
     logError,
+    deleteFile,
+    createFile,
+    restObject,
     logSuccess,
+    createFolder,
     createConfig,
+    deleteFolder,
     getConfigFile,
     returnPromise,
-    restObject,
-    hasActionSalved,
-    deleteFolder,
-    deleteFile,
     deleteAndSave,
+    getConfigStore,
+    appendContent,
+    hasActionSalved,
     changeActionBehavior,
 };
