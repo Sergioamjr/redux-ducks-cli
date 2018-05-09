@@ -8,15 +8,15 @@ sinonStubPromise(sinon);
 chai.use(sinonChai);
 
 const {
-  createFolder,
-  createFile,
-  appendContent,
   base,
   logError,
+  createFile,
   logSuccess,
+  createFolder,
   createConfig,
   getConfigFile,
-  returnPromise
+  returnPromise,
+  appendContent,
 } = require('./../src/communs/index.js');
 
 describe("Commons.js", () => {
@@ -38,7 +38,7 @@ describe("Commons.js", () => {
 
   describe("Smoke tests", () => {
     it("Base should be redux", () => {
-      expect(base).to.equal("redux")
+      expect(base).to.equal("src/redux")
     });
 
     it("Function createFolder should exists", () => {

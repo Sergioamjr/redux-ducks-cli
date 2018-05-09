@@ -1,5 +1,5 @@
 {
-  "name": "nodejs",
+  "name": "rdx-cli",
   "version": "1.0.0",
   "description": "",
   "main": "src/index.js",
@@ -9,7 +9,7 @@
     "test": "./node_modules/mocha/bin/mocha tests/**/*.js -w"
   },
   "bin": {
-    "redux-ducks-cli": "src/index.js"
+    "rdx-cli": "src/index.js"
   },
   "keywords": [],
   "preferGlobal": true,

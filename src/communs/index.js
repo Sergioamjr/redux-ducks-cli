@@ -1,6 +1,6 @@
 const { existsSync, mkdir, writeFile, appendFile, readFile, rmdir, unlink } = require('fs');
 
-const base = 'redux';
+const base = 'src/redux';
 
 const logError = error => {
     /* eslint-disable */
