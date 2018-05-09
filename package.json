@@ -11,10 +11,15 @@
   "bin": {
     "rdx-cli": "src/index.js"
   },
-  "keywords": [],
+  "files": ["src", "tests"],
+  "keywords": [
+    "redux",
+    "cli",
+    "react"
+  ],
+  "author": "Sérgio Júnior <sergioamjr91@gmail.com> (http://github.com/sergioJrDev/)",
   "preferGlobal": true,
-  "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "chai": "^4.1.2",
     "yargs": "^11.0.0"
