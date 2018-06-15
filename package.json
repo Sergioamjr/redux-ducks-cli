@@ -2,20 +2,16 @@
   "name": "rdx-cli",
   "version": "1.1.1",
   "description": "",
-  "main": "lib/index.js",
+  "main": ".src/index.js",
   "scripts": {
-    "start": "node src/index.js",
+    "start": "node bin/index.js",
     "delete": "rm -rf redux",
-    "build": "rm -rf lib & ./node_modules/.bin/babel src --out-dir lib",
+    "build": "webpack",
     "test": "./node_modules/mocha/bin/mocha tests/**/*.js -w"
   },
   "bin": {
-    "rdx-cli": "lib/index.js"
+    "rdx-cli": "./dist/bundle.js"
   },
-  "files": [
-    "lib",
-    "tests"
-  ],
   "keywords": [
     "redux",
     "cli",
