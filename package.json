@@ -1,5 +1,5 @@
 {
-  "name": "rdx-cli",
+  "name": "redux-ducks-cli",
   "version": "1.2.0",
   "description": "",
   "main": ".src/index.js",
