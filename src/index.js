@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const cli = () => {
   console.log("start ss");
   const yargs = require("yargs");
