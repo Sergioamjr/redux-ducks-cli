@@ -10,7 +10,7 @@
     "test": "./node_modules/mocha/bin/mocha tests/**/*.js -w"
   },
   "bin": {
-    "rdx-cli": "./dist/bundle.js"
+    "redux-ducks-cli": "./dist/bundle.js"
   },
   "files": [
     "dist",
