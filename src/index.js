@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 // const cli = () => {
-console.log("start ss");
 const yargs = require("yargs");
 const { createReducer } = require("./reducers");
 const {
@@ -57,7 +56,6 @@ const {
 } = yarg;
 
 const starter = async () => {
-  console.log("startt");
   try {
     await createFolder(base);
     createFile(`${base}/reduxConfig.json`, "{}");
@@ -65,7 +63,6 @@ const starter = async () => {
     createStore();
     logSuccess("Projeto iniciado com sucesso.");
   } catch (error) {
-    console.log("err");
     logError(error);
   }
 };
@@ -103,8 +100,6 @@ const removeAction = async (action, state) => {
     logError(error);
   }
 };
-
-console.log("check", yarg);
 
 // Start
 if (init) {
